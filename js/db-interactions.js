@@ -51,7 +51,7 @@ function deleteMovieFromFb(movieId) {
 function getNewMovie(movieId) {
   return new Promise(function(resolve, reject){
  $.ajax({
-      url: `http://www.omdbapi.com/?t=${userMovie}&y=&plot=short&r=json`
+      url: `http://www.omdbapi.com/?t=Rudy&y=&plot=short&r=json`
     }).done(function(movieData){
       console.log("movieData", movieData);
       resolve(movieData);

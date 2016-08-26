@@ -85,7 +85,7 @@ function deleteMovieFromFb(movieId) {
 function getNewMovie(movieId) {
   return new Promise(function(resolve, reject){
  $.ajax({
-      url: `http://www.omdbapi.com/?t=${userMovie}&y=&plot=short&r=json`
+      url: `http://www.omdbapi.com/?t=Rudy&y=&plot=short&r=json`
     }).done(function(movieData){
       console.log("movieData", movieData);
       resolve(movieData);
@@ -152,7 +152,11 @@ let db = require("./db-interactions"),
   dom = require("./dom-builder");
 
 function newMovieSearch() {
-
+  console.log("new movie search");
+  db.getNewMovie()
+    .then(function(movieData) {
+      console.log("new movie search", movieData);
+    });
 }
 
 function searchMyMovies() {
@@ -172,7 +176,16 @@ function prepFbMoviesForDomLoad() {
 
 }
 
+function buildNewMovieObject() {
+
+}
+
+function buildFbMovieObject() {
+
+}
+
 prepFbMoviesForDomLoad(); //this will move into the log in user event listener to run after authentication.
+newMovieSearch(); //this will be removed once we get a user to log in. it is here simply to allow us to ajax call omdb.
 
 //User Login
 $("#auth-btn").click(function() {
