@@ -76,3 +76,4 @@ $(".moveNewMovies").click(function(event) {
 
 });
 
+
