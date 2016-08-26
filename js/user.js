@@ -1,5 +1,5 @@
 "use strict";
-let firebase = require("./firebaseConfig"),
+let firebase = require("./api-config"),
     provider = new firebase.auth.GoogleAuthProvider();
 
 function logInGoogle() {
