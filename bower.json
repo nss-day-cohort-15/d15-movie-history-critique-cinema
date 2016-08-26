@@ -1,0 +1,6 @@
+{
+  "name": "firebase-local-weathergrunt",
+  "dependencies": {
+    "jquery": "^3.1.0"
+  }
+}
