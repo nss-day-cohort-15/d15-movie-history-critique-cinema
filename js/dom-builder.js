@@ -1,16 +1,16 @@
-"use strict"
+"use strict";
 
 function populateUserMovies(){
 
 
 
-};
+}
 
 function populateNewMovies(){
 
 
 
-};
+}
 
 
 

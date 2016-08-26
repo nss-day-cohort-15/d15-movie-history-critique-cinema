@@ -1,8 +1,7 @@
 "use strict";
 
-let $ = require('jquery'),
-    firebase = require("./firebaseConfig");
-    var userMovie = getMovieTitle();
+let firebase = require("./api-config");
+var userMovie = getMovieTitle();
 
 function getUserMovies(callback) {
   return new Promise(function(resolve, reject){
