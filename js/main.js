@@ -21,15 +21,20 @@ function addToList() {
 }
 
 function prepFbMoviesForDomLoad() {
-  console.log("load some songs");
+  console.log("load some movies");
 
 }
 
 prepFbMoviesForDomLoad(); //this will move into the log in user event listener to run after authentication.
 
-//event listeners
-$(".logInUser").click(function(event) {
-
+//User Login
+$("#auth-btn").click(function() {
+  console.log("clicked auth");
+  login()
+  .then(function(result){
+    let user = result.user;
+    console.log("logged in user", user.uid);
+  });
 });
 
 // $(".logOutUser").click(function(event) {
