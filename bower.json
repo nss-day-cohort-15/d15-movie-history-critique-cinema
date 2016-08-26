@@ -1,5 +1,5 @@
 {
-  "name": "firebase-local-weathergrunt",
+  "name": "movie-history",
   "dependencies": {
     "jquery": "^3.1.0"
   }
