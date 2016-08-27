@@ -1,3 +1,5 @@
 bower_components
 node_modules
 js/api-getter.js
+materialize/css/.DS_Store
+materialize/js/.DS_Store
