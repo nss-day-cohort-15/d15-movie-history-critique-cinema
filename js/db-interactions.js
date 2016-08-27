@@ -48,10 +48,11 @@ function deleteMovieFromFb(movieId) {
   });
 }
 
+// Gets movie object from OMDb
 function getNewMovie(movieId) {
   return new Promise(function(resolve, reject){
  $.ajax({
-      url: `http://www.omdbapi.com/?t=Rudy&y=&plot=short&r=json`
+      url: "http://www.omdbapi.com/?t="+movieId+"&y=&plot=short&r=json"
     }).done(function(movieData){
       console.log("movieData", movieData);
       resolve(movieData);

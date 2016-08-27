@@ -30,7 +30,6 @@ function getKey() {
 }
 
 module.exports = getKey;
-
 },{}],3:[function(require,module,exports){
 "use strict";
 
@@ -82,10 +81,11 @@ function deleteMovieFromFb(movieId) {
   });
 }
 
+// Gets movie object from OMDb
 function getNewMovie(movieId) {
   return new Promise(function(resolve, reject){
  $.ajax({
-      url: `http://www.omdbapi.com/?t=Rudy&y=&plot=short&r=json`
+      url: "http://www.omdbapi.com/?t="+movieId+"&y=&plot=short&r=json"
     }).done(function(movieData){
       console.log("movieData", movieData);
       resolve(movieData);
@@ -151,11 +151,11 @@ let db = require("./db-interactions"),
   login = require("./user"),
   dom = require("./dom-builder");
 
-function newMovieSearch() {
+function newMovieSearch(title) {
   console.log("new movie search");
-  db.getNewMovie()
+  db.getNewMovie(title)
     .then(function(movieData) {
-      console.log("new movie search", movieData);
+
     });
 }
 
@@ -194,6 +194,7 @@ $("#auth-btn").click(function() {
   .then(function(result){
     let user = result.user;
     console.log("logged in user", user.uid);
+    // loadMoviesToDOM();
   });
 });
 
@@ -201,8 +202,12 @@ $("#auth-btn").click(function() {
 
 // });
 
+// To-Do : Add keypress event, validate user input, clear text input
 $(".findNewMovie").click(function(event) {
-
+  console.log("search button clicked");
+  var movieTitle = $(".searchInput").val();
+  console.log("movieTitle: ", movieTitle);
+  newMovieSearch(movieTitle);
 });
 
 $(".searchMyMovies").click(function(event) {

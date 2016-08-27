@@ -4,11 +4,11 @@ let db = require("./db-interactions"),
   login = require("./user"),
   dom = require("./dom-builder");
 
-function newMovieSearch() {
+function newMovieSearch(title) {
   console.log("new movie search");
-  db.getNewMovie()
+  db.getNewMovie(title)
     .then(function(movieData) {
-      console.log("new movie search", movieData);
+
     });
 }
 
@@ -47,6 +47,7 @@ $("#auth-btn").click(function() {
   .then(function(result){
     let user = result.user;
     console.log("logged in user", user.uid);
+    // loadMoviesToDOM();
   });
 });
 
@@ -54,8 +55,12 @@ $("#auth-btn").click(function() {
 
 // });
 
+// To-Do : Add keypress event, validate user input, clear text input
 $(".findNewMovie").click(function(event) {
-
+  console.log("search button clicked");
+  var movieTitle = $(".searchInput").val();
+  console.log("movieTitle: ", movieTitle);
+  newMovieSearch(movieTitle);
 });
 
 $(".searchMyMovies").click(function(event) {

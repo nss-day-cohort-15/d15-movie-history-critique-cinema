@@ -2,15 +2,7 @@
 <html>
 <head>
   <title>Movie History</title>
-
-  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
-
-  <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
-
   <link rel="stylesheet" type="text/css" href="css/main.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
 </head>
 <body>
 <h1>Movie History</h1>
@@ -18,13 +10,12 @@
     <button id="auth-btn" type="button">Sign in with Google</button>
   </div>
   <div>
-    <input type="text" name="movieSearch" class="movieSearch">
+    <input type="text" name="movieSearch" class="searchInput" placeholder="Search all movies"><button class="findNewMovie">Search</button>
   </div>
   <div class="movieOutput">
     <!-- Movie Info Here -->
   </div>
 
-<!-- <script src="materialize/js/materialize.min.js"></script> -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="dist/app.js"></script>
 
