@@ -5,7 +5,11 @@ let db = require("./db-interactions"),
   dom = require("./dom-builder");
 
 function newMovieSearch() {
-
+  console.log("new movie search");
+  db.getNewMovie()
+    .then(function(movieData) {
+      console.log("new movie search", movieData);
+    });
 }
 
 function searchMyMovies() {
@@ -21,15 +25,29 @@ function addToList() {
 }
 
 function prepFbMoviesForDomLoad() {
-  console.log("load some songs");
+  console.log("load some movies");
+
+}
+
+function buildNewMovieObject() {
+
+}
+
+function buildFbMovieObject() {
 
 }
 
 prepFbMoviesForDomLoad(); //this will move into the log in user event listener to run after authentication.
+newMovieSearch(); //this will be removed once we get a user to log in. it is here simply to allow us to ajax call omdb.
 
-//event listeners
-$(".logInUser").click(function(event) {
-
+//User Login
+$("#auth-btn").click(function() {
+  console.log("clicked auth");
+  login()
+  .then(function(result){
+    let user = result.user;
+    console.log("logged in user", user.uid);
+  });
 });
 
 // $(".logOutUser").click(function(event) {
