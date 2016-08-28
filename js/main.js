@@ -2,15 +2,24 @@
 
 let db = require("./db-interactions"),
   login = require("./user"),
-  dom = require("./dom-builder");
+  dom = require("./dom-builder"),
+  Handlebars = require("hbsfy/runtime"),
+  movieTemplate = require('../templates/movies/movie.hbs');
+  // movieData = require('../templates/movies/movie-data.js');
+
 
 function newMovieSearch(title) {
-  console.log("new movie search");
   db.getNewMovie(title)
     .then(function(movieData) {
-
+      // var movieTemplate = $("search-template").html();
+      $("#movieOutput").append(movieTemplate(movieData));
+      // var el_html = template(movieData);
+      // $(".movieOutput").html(el_html);
     });
 }
+  
+
+
 
 function searchMyMovies() {
 
@@ -38,7 +47,7 @@ function buildFbMovieObject() {
 }
 
 prepFbMoviesForDomLoad(); //this will move into the log in user event listener to run after authentication.
-newMovieSearch(); //this will be removed once we get a user to log in. it is here simply to allow us to ajax call omdb.
+// newMovieSearch(); //this will be removed once we get a user to log in. it is here simply to allow us to ajax call omdb.
 
 //User Login
 $("#auth-btn").click(function() {
