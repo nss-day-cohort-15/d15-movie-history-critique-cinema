@@ -29,7 +29,6 @@ function addToList() {
 
 }
 
-
 function prepFbMoviesForDomLoad(userId) {
   console.log("my Id is: ", userId);
   console.log("load some movies");
