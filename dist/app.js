@@ -129,18 +129,16 @@ function populateUserMovies(fbmovieData){
 
 }
 
-function populateNewMovies(){
-  console.log("I'll populate new movies from OMDb");
-
-
-
+function populateNewMovie(newMovieObj){
+  console.log("I'll put this into the DOM ", newMovieObj);
+  $(".movieOutput").html(`<h2>${newMovieObj.movieTitle}</h2><h4>${newMovieObj.movieYear}</h4><h4>${newMovieObj.movieActors}</h4><button class="addToUnwatched">Add this to your unwatched list</button><button class="addToWatched">add this to your already watched list</button>`);
 }
 
 
 
 module.exports = {
   populateUserMovies,
-  populateNewMovies
+  populateNewMovie
 
 };
 
@@ -149,14 +147,18 @@ module.exports = {
 
 let db = require("./db-interactions"),
   login = require("./user"),
-  dom = require("./dom-builder");
+  dom = require("./dom-builder"),
+  userId,
+  newMovieObj = {};
 
 function newMovieSearch(newMovieInput) {
   console.log("new movie search");
   db.getNewMovie(newMovieInput)
     .then(function(movieData) {
       console.log("new movie search", movieData);
-      buildNewMovieObject(movieData);
+      let newMovieObj = buildNewMovieObject(movieData);
+      console.log("after newMovieObj ", newMovieObj);
+      dom.populateNewMovie(newMovieObj);
     });
 }
 
@@ -186,9 +188,12 @@ function buildNewMovieObject(movieData) {
   let newData = movieData;
   console.log("as a variable: ", newData);
   let newMovieObj = {
-    movieTitle : newData.title
+    movieTitle : newData.Title,
+    movieYear: newData.Year,
+    movieActors: newData.Actors
   };
   console.log(newMovieObj);
+  return newMovieObj;
 }
 
 function buildFbMovieObject() {
@@ -234,26 +239,26 @@ $(".deleteMovie").click(function(event) {
 
 });
 
-$(".addToWatched").click(function(event) {
+$(document).on("click", ".addToWatched", function() {
   console.log("you want to add this to your watched list");
+  let watchedValue = true;
+  console.log(newMovieObj);
+  //how do I get the movie object in here?
 
 });
 
-$(".addToUnwatched").click(function(event) {
-
+$(document).on("click", ".addToUnwatched", function() {
+  console.log("you want to add this to your UNwatched list");
 });
 
 $(".rateMovie").click(function(event) {
 
 });
 
-$(".searchFilter").click(function(event) {
+// $(".searchFilter").click(function(event) {
+// I don't think we need to do this since we're only asking for a title at this point. a text box will do
+// });
 
-});
-
-$(".moveNewMovies").click(function(event) {
-
-});
 
 
 
