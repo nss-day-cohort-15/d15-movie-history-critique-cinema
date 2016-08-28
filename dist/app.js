@@ -81,10 +81,10 @@ function deleteMovieFromFb(movieId) {
   });
 }
 
-function getNewMovie(movieId) {
+function getNewMovie(newMovieInput) {
   return new Promise(function(resolve, reject){
  $.ajax({
-      url: `http://www.omdbapi.com/?t=Rudy&y=&plot=short&r=json`
+      url: `http://www.omdbapi.com/?t=${newMovieInput}&y=&plot=short&r=json`
     }).done(function(movieData){
       console.log("movieData", movieData);
       resolve(movieData);
@@ -123,13 +123,14 @@ module.exports = {
 },{"./api-config":1}],4:[function(require,module,exports){
 "use strict";
 
-function populateUserMovies(){
-
+function populateUserMovies(fbmovieData){
+  console.log("I'll populate the user's movies from FB");
 
 
 }
 
 function populateNewMovies(){
+  console.log("I'll populate new movies from OMDb");
 
 
 
@@ -150,11 +151,12 @@ let db = require("./db-interactions"),
   login = require("./user"),
   dom = require("./dom-builder");
 
-function newMovieSearch() {
+function newMovieSearch(newMovieInput) {
   console.log("new movie search");
-  db.getNewMovie()
+  db.getNewMovie(newMovieInput)
     .then(function(movieData) {
       console.log("new movie search", movieData);
+      buildNewMovieObject(movieData);
     });
 }
 
@@ -170,25 +172,40 @@ function addToList() {
 
 }
 
-function prepFbMoviesForDomLoad() {
-  console.log("load some songs");
-
+function prepFbMoviesForDomLoad(userId) {
+  console.log("my Id is: ", userId);
+  console.log("load some movies");
+  db.getUserMovies(userId)
+    .then (function (fbmovieData){
+      dom.populateUserMovies(fbmovieData);
+    });
 }
 
-function buildNewMovieObject() {
-
+function buildNewMovieObject(movieData) {
+  console.log("the movie is in buildNewMovieObject ", movieData);
+  let newData = movieData;
+  console.log("as a variable: ", newData);
+  let newMovieObj = {
+    movieTitle : newData.title
+  };
+  console.log(newMovieObj);
 }
 
 function buildFbMovieObject() {
 
 }
 
-prepFbMoviesForDomLoad(); //this will move into the log in user event listener to run after authentication.
-newMovieSearch(); //this will be removed once we get a user to log in. it is here simply to allow us to ajax call omdb.
 
-//event listeners
-$(".logInUser").click(function(event) {
-
+//User Login
+$("#auth-btn").click(function() {
+  console.log("clicked auth");
+  login()
+  .then(function(result){
+    let user = result.user;
+    console.log("logged in user", user.uid);
+    let userId = user.uid;
+    prepFbMoviesForDomLoad(userId);
+  });
 });
 
 // $(".logOutUser").click(function(event) {
@@ -196,7 +213,9 @@ $(".logInUser").click(function(event) {
 // });
 
 $(".findNewMovie").click(function(event) {
-
+  let newMovieInput = $(".findMovieInput").val();
+  console.log("findNewMovieEL", newMovieInput);
+  newMovieSearch(newMovieInput);
 });
 
 $(".searchMyMovies").click(function(event) {
@@ -216,6 +235,7 @@ $(".deleteMovie").click(function(event) {
 });
 
 $(".addToWatched").click(function(event) {
+  console.log("you want to add this to your watched list");
 
 });
 
