@@ -1,7 +1,7 @@
 "use strict";
 
 let firebase = require("./api-config");
-    var userMovie = getMovieTitle();
+var userMovie = getMovieTitle();
 
 function getUserMovies(callback) {
   return new Promise(function(resolve, reject){
