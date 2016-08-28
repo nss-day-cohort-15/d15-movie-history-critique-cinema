@@ -37,8 +37,6 @@ function prepFbMoviesForDomLoad(userId) {
     .then (function (fbmovieData){
       dom.populateUserMovies(fbmovieData);
     });
-function prepFbMoviesForDomLoad() {
-  console.log("load some movies");
 }
 
 function buildNewMovieObject(movieData) {
