@@ -149,23 +149,27 @@ module.exports = {
 
 let db = require("./db-interactions"),
   login = require("./user"),
+  fb = require("./api-config"),
   dom = require("./dom-builder"),
+  currentUser = null,
   Handlebars = require("hbsfy/runtime"),
   movieTemplate = require('../templates/movies/movie.hbs'),
-  currentMovie;
+  currentMovie = null;
   // movieData = require('../templates/movies/movie-data.js');
 
 
 function newMovieSearch(title) {
+  currentUser = fb.auth().currentUser.uid;
   db.getNewMovie(title)
     .then(function(movieData) {
       $("#movieOutput").append(movieTemplate(movieData));
       currentMovie = movieData;
+      // console.log(movieData.Genre);
+
+
     });
 }
   
-
-
 
 function searchMyMovies() {
 
@@ -188,8 +192,18 @@ function buildNewMovieObject() {
 
 }
 
-function buildFbMovieObject() {
-
+// Q: How would the this. method look in this function? err saying possible strict violation.   this.movie = "test";
+function buildFbMovieObject(newMovie) {
+  var movie = {
+    title: newMovie.Title,
+    release: newMovie.Released,
+    actors: newMovie.Actors,
+    rating: null, 
+    watched: false,
+    user: currentUser
+  };
+  console.log(movie);
+  return movie;
 }
 
 prepFbMoviesForDomLoad(); //this will move into the log in user event listener to run after authentication.
@@ -241,7 +255,9 @@ $(".addToWatched").click(function(event) {
 
 $(".add-to-watch").click(function(event) {
   console.log("currentMovie: ", currentMovie);
-  db.addMovieToFb(currentMovie);
+  let movieId = buildFbMovieObject(currentMovie);
+  console.log("movieid: ", movieId);
+  db.addMovieToFb(movieId);
 });
 
 $(".rateMovie").click(function(event) {
@@ -258,13 +274,12 @@ $(".moveNewMovies").click(function(event) {
 
 
 
-},{"../templates/movies/movie.hbs":33,"./db-interactions":3,"./dom-builder":4,"./user":6,"hbsfy/runtime":32}],6:[function(require,module,exports){
+},{"../templates/movies/movie.hbs":33,"./api-config":1,"./db-interactions":3,"./dom-builder":4,"./user":6,"hbsfy/runtime":32}],6:[function(require,module,exports){
 "use strict";
 let firebase = require("./api-config"),
     provider = new firebase.auth.GoogleAuthProvider();
 
 function logInGoogle() {
-  console.log("you are authorized!");
   return firebase.auth().signInWithPopup(provider);
 }
 
@@ -1920,11 +1935,11 @@ module.exports = HandlebarsCompiler.template({"1":function(container,depth0,help
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "    <div class=\"movie\">\n      <h1>"
+  return "<div class=\"movie\">\n      <h3>"
     + alias4(((helper = (helper = helpers.Title || (depth0 != null ? depth0.Title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Title","hash":{},"data":data}) : helper)))
-    + "</h1>\n      <h4>"
+    + "</h3>\n      <h7>"
     + alias4(((helper = (helper = helpers.Released || (depth0 != null ? depth0.Released : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Released","hash":{},"data":data}) : helper)))
-    + "</h4>\n      <h2>Staring: </h2>\n\n\n<!--       <ul>\n        "
+    + "</h7>\n      <h4>Staring: </h4>\n\n\n<!--       <ul>\n        "
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.tags : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + " -->\n<!--       </ul> -->\n    </div>";
 },"useData":true});

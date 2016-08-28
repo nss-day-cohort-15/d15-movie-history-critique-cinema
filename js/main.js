@@ -2,19 +2,24 @@
 
 let db = require("./db-interactions"),
   login = require("./user"),
+  fb = require("./api-config"),
   dom = require("./dom-builder"),
   currentUser = null,
   Handlebars = require("hbsfy/runtime"),
   movieTemplate = require('../templates/movies/movie.hbs'),
-  currentMovie;
+  currentMovie = null;
   // movieData = require('../templates/movies/movie-data.js');
 
 
 function newMovieSearch(title) {
+  currentUser = fb.auth().currentUser.uid;
   db.getNewMovie(title)
     .then(function(movieData) {
       $("#movieOutput").append(movieTemplate(movieData));
       currentMovie = movieData;
+      // console.log(movieData.Genre);
+
+
     });
 }
   
@@ -40,17 +45,18 @@ function buildNewMovieObject() {
 
 }
 
-function buildFbMovieObject() {
-  let FbMovieObjct = {
-    // title:
-    // released:
-    // actors:
-    // watched: 
-    // rating:
-    // id: 
-    // uid: currentUser
+// Q: How would the this. method look in this function? err saying possible strict violation.   this.movie = "test";
+function buildFbMovieObject(newMovie) {
+  var movie = {
+    title: newMovie.Title,
+    release: newMovie.Released,
+    actors: newMovie.Actors,
+    rating: null, 
+    watched: false,
+    user: currentUser
   };
-  return FbMovieObject;
+  console.log(movie);
+  return movie;
 }
 
 prepFbMoviesForDomLoad(); //this will move into the log in user event listener to run after authentication.
@@ -103,7 +109,8 @@ $(".addToWatched").click(function(event) {
 $(".add-to-watch").click(function(event) {
   console.log("currentMovie: ", currentMovie);
   let movieId = buildFbMovieObject(currentMovie);
-  db.addMovieToFb(movieId)
+  console.log("movieid: ", movieId);
+  db.addMovieToFb(movieId);
 });
 
 $(".rateMovie").click(function(event) {
