@@ -5,19 +5,33 @@
   <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-<h1>Movie History</h1>
-  <div>
-    <button id="auth-btn" type="button">Sign in with Google</button>
-  </div>
-  <div>
-    <input type="text" name="movieSearch" class="searchInput" placeholder="Search all movies"><button class="findNewMovie">Search</button>
-  </div>
-  <div id="movieOutput">
-    <!-- Movie Info Here -->
-  </div>
-  <p class="hidden add-to-watch"><a href="#">Add to Watchlist</a></p>
+  <div class="container">
 
+    <div class="header">
+      <button class="findNewMovie">Search</button>
+      <input type="text" name="movieSearch" class="searchInput" placeholder="Search OMDb and your tracked movies...">
+      <button id="auth-btn" type="button">Sign in with Google</button>
+    </div>
+    
+    <h1>Movie History</h1> 
+    <!-- To-Do: add breadcrumbs -->
 
+      <table>
+        <tr>
+          <td class="hidden show-untracked-list"><a href="#">Show Untracked</a></td>
+          <td class="hidden show-unwatched-list"><a href="#">Show Unwatched</a></td>
+          <td class="hidden show-watched-list"><a href="#">Show Watched</a></td>
+          <td class="hidden show-favorites-list"><a href="#">Show Favorites</a></td>
+        </tr>
+      </table>
+    <div id="movieOutput">
+      <!-- Movie Info Here -->
+    </div>
+
+    <p class="hidden add-to-watch"><a href="#">Add to Watchlist</a></p>
+
+  </div>
+    
 
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>

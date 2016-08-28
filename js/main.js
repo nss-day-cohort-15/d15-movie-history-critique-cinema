@@ -3,6 +3,7 @@
 let db = require("./db-interactions"),
   login = require("./user"),
   dom = require("./dom-builder"),
+  currentUser = null,
   Handlebars = require("hbsfy/runtime"),
   movieTemplate = require('../templates/movies/movie.hbs'),
   currentMovie;
@@ -17,8 +18,6 @@ function newMovieSearch(title) {
     });
 }
   
-
-
 
 function searchMyMovies() {
 
@@ -42,7 +41,16 @@ function buildNewMovieObject() {
 }
 
 function buildFbMovieObject() {
-
+  let FbMovieObjct = {
+    // title:
+    // released:
+    // actors:
+    // watched: 
+    // rating:
+    // id: 
+    // uid: currentUser
+  };
+  return FbMovieObject;
 }
 
 prepFbMoviesForDomLoad(); //this will move into the log in user event listener to run after authentication.
@@ -94,7 +102,8 @@ $(".addToWatched").click(function(event) {
 
 $(".add-to-watch").click(function(event) {
   console.log("currentMovie: ", currentMovie);
-  db.addMovieToFb(currentMovie);
+  let movieId = buildFbMovieObject(currentMovie);
+  db.addMovieToFb(movieId)
 });
 
 $(".rateMovie").click(function(event) {
