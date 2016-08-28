@@ -2,3 +2,4 @@ bower_components
 node_modules
 js/api-getter.js
 materialize
+dist
