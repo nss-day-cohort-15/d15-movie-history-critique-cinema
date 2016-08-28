@@ -13,7 +13,7 @@ var config = {
   authDomain: fbData.authUrl
 };
 
-console.log("config", config);
+// console.log("config", config);
 
 firebase.initializeApp(config);
 
@@ -35,6 +35,8 @@ module.exports = getKey;
 
 let firebase = require("./api-config");
 var userMovie = getMovieTitle();
+
+// To-Do: add .fail reject error alerts
 
 function getUserMovies(callback) {
   return new Promise(function(resolve, reject){
@@ -154,22 +156,26 @@ let db = require("./db-interactions"),
   currentUser = null,
   Handlebars = require("hbsfy/runtime"),
   movieTemplate = require('../templates/movies/movie.hbs'),
-  currentMovie = null;
+  currentMovie = null,
+  myMovies = [];
   // movieData = require('../templates/movies/movie-data.js');
 
 
 function newMovieSearch(title) {
-  currentUser = fb.auth().currentUser.uid;
   db.getNewMovie(title)
     .then(function(movieData) {
       $("#movieOutput").append(movieTemplate(movieData));
       currentMovie = movieData;
-      // console.log(movieData.Genre);
-
-
     });
 }
-  
+ 
+function showMyMovies(myMovies, isWatched) {
+  console.log("showMyMovies running");
+  var movies=[];
+  for(var movie in myMovies) {
+    console.log("movie: ", movie);
+  }
+} 
 
 function searchMyMovies() {
 
@@ -185,8 +191,19 @@ function addToList() {
 
 function prepFbMoviesForDomLoad() {
   console.log("load some movies");
+  db.getUserMovies()
+    .then(function(movieData){
+        for(var movie in movieData) {
+          console.log("user: ", movieData[movie].user);
 
+          if(movieData[movie].user===currentUser){
+            myMovies.push(movieData[movie]);
+            console.log("movieData[movie]: ", movieData[movie]);
+          }
+        }
+    });
 }
+
 
 function buildNewMovieObject() {
 
@@ -200,13 +217,14 @@ function buildFbMovieObject(newMovie) {
     actors: newMovie.Actors,
     rating: null, 
     watched: false,
+    favorite: false,
     user: currentUser
   };
   console.log(movie);
   return movie;
 }
 
-prepFbMoviesForDomLoad(); //this will move into the log in user event listener to run after authentication.
+ //this will move into the log in user event listener to run after authentication.
 // newMovieSearch(); //this will be removed once we get a user to log in. it is here simply to allow us to ajax call omdb.
 
 //User Login
@@ -216,7 +234,8 @@ $("#auth-btn").click(function() {
   .then(function(result){
     let user = result.user;
     console.log("logged in user", user.uid);
-    // loadMoviesToDOM();
+    currentUser = fb.auth().currentUser.uid;
+    prepFbMoviesForDomLoad();
   });
 });
 
@@ -229,28 +248,32 @@ $(".findNewMovie").click(function(event) {
   console.log("search button clicked");
   var movieTitle = $(".searchInput").val();
   $(".add-to-watch").toggleClass("hidden");
-  console.log("movieTitle: ", movieTitle);
   newMovieSearch(movieTitle);
 });
 
-$(".searchMyMovies").click(function(event) {
+$(".show-unwatched-list").click(function(event) {
+    console.log("Show Unwatched clicked");
+    $(".show-unwatched-list").toggleClass("hidden");
+    showMyMovies(myMovies, false);
+}); 
 
+$(".show-watched-list").click(function(event) {
+    console.log("Show Watched clicked");
+    $(".show-watched-list").toggleClass("hidden");
+    showMyMovies(myMovies, true);
 });
 
-$(".showUnwatchedMovies").click(function(event) {
-
+$(".show-favorites-list").click(function(event) {
+    console.log("showFavorite clicked");
+    $(".show-favorites-list").toggleClass("hidden");
 });
 
-$(".showWatchedMovies").click(function(event) {
-
-});
-
-$(".deleteMovie").click(function(event) {
-
-});
-
-$(".addToWatched").click(function(event) {
-
+$(".delete").click(function(event) {
+  console.log("deleteMovie clicked");
+  // console.log("currentMovie: ", currentMovie);
+  // let movieId = buildFbMovieObject(currentMovie);
+  // console.log("movieid: ", movieId);
+  // db.addMovieToFb(movieId);
 });
 
 $(".add-to-watch").click(function(event) {
@@ -265,6 +288,11 @@ $(".rateMovie").click(function(event) {
 });
 
 $(".searchFilter").click(function(event) {
+
+});
+
+
+$(".searchMyMovies").click(function(event) {
 
 });
 

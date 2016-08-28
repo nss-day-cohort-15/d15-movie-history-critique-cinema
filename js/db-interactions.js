@@ -3,6 +3,8 @@
 let firebase = require("./api-config");
 var userMovie = getMovieTitle();
 
+// To-Do: add .fail reject error alerts
+
 function getUserMovies(callback) {
   return new Promise(function(resolve, reject){
     $.ajax({
