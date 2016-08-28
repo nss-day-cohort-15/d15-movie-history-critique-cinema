@@ -6,16 +6,18 @@ let db = require("./db-interactions"),
   dom = require("./dom-builder"),
   currentUser = null,
   Handlebars = require("hbsfy/runtime"),
-  movieTemplate = require('../templates/movies/movie.hbs'),
+  searchTemplate = require('../templates/movies/movie.hbs'),
+  // userTemplate = require('../templates/movies/userMovies.hbs'),
   currentMovie = null,
   myMovies = [];
   // movieData = require('../templates/movies/movie-data.js');
 
 
+
 function newMovieSearch(title) {
   db.getNewMovie(title)
     .then(function(movieData) {
-      $("#movieOutput").append(movieTemplate(movieData));
+      $("#movieOutput").append(searchTemplate(movieData));
       currentMovie = movieData;
     });
 }
@@ -23,10 +25,14 @@ function newMovieSearch(title) {
 function showMyMovies(myMovies, isWatched) {
   console.log("showMyMovies running");
   var movies=[];
-  for(var movie in myMovies) {
-    console.log("movie: ", movie);
-  }
-} 
+  for(var key in myMovies) {
+    // console.log("key: ", key);
+    if(myMovies[key].watched===isWatched){
+      movies.push(myMovies[key]);
+      console.log("myMovies[key]: ",  myMovies[key]);
+    }
+  } 
+}
 
 function searchMyMovies() {
 
@@ -46,7 +52,6 @@ function prepFbMoviesForDomLoad() {
     .then(function(movieData){
         for(var movie in movieData) {
           console.log("user: ", movieData[movie].user);
-
           if(movieData[movie].user===currentUser){
             myMovies.push(movieData[movie]);
             console.log("movieData[movie]: ", movieData[movie]);
@@ -94,7 +99,7 @@ $("#auth-btn").click(function() {
 
 // });
 
-// To-Do : Add keypress event, validate user input, clear text input
+// To-Do : Add keypress event, validate user input, clear text input, clear current search results
 $(".findNewMovie").click(function(event) {
   console.log("search button clicked");
   var movieTitle = $(".searchInput").val();
@@ -132,6 +137,7 @@ $(".add-to-watch").click(function(event) {
   let movieId = buildFbMovieObject(currentMovie);
   console.log("movieid: ", movieId);
   db.addMovieToFb(movieId);
+  // myMovies.push(movieId);
 });
 
 $(".rateMovie").click(function(event) {
