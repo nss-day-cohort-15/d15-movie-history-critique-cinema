@@ -29,6 +29,7 @@ function addToList() {
 
 }
 
+
 function prepFbMoviesForDomLoad(userId) {
   console.log("my Id is: ", userId);
   console.log("load some movies");
@@ -36,6 +37,8 @@ function prepFbMoviesForDomLoad(userId) {
     .then (function (fbmovieData){
       dom.populateUserMovies(fbmovieData);
     });
+function prepFbMoviesForDomLoad() {
+  console.log("load some movies");
 }
 
 function buildNewMovieObject(movieData) {
@@ -54,7 +57,6 @@ function buildNewMovieObject(movieData) {
 function buildFbMovieObject() {
 
 }
-
 
 //User Login
 $("#auth-btn").click(function() {
