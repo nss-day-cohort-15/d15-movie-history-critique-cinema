@@ -151,17 +151,16 @@ let db = require("./db-interactions"),
   login = require("./user"),
   dom = require("./dom-builder"),
   Handlebars = require("hbsfy/runtime"),
-  movieTemplate = require('../templates/movies/movie.hbs');
+  movieTemplate = require('../templates/movies/movie.hbs'),
+  currentMovie;
   // movieData = require('../templates/movies/movie-data.js');
 
 
 function newMovieSearch(title) {
   db.getNewMovie(title)
     .then(function(movieData) {
-      // var movieTemplate = $("search-template").html();
       $("#movieOutput").append(movieTemplate(movieData));
-      // var el_html = template(movieData);
-      // $(".movieOutput").html(el_html);
+      currentMovie = movieData;
     });
 }
   
@@ -215,6 +214,7 @@ $("#auth-btn").click(function() {
 $(".findNewMovie").click(function(event) {
   console.log("search button clicked");
   var movieTitle = $(".searchInput").val();
+  $(".add-to-watch").toggleClass("hidden");
   console.log("movieTitle: ", movieTitle);
   newMovieSearch(movieTitle);
 });
@@ -239,8 +239,9 @@ $(".addToWatched").click(function(event) {
 
 });
 
-$(".addToUnwatched").click(function(event) {
-
+$(".add-to-watch").click(function(event) {
+  console.log("currentMovie: ", currentMovie);
+  db.addMovieToFb(currentMovie);
 });
 
 $(".rateMovie").click(function(event) {
