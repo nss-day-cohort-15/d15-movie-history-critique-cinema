@@ -34,7 +34,8 @@ function showMyMovies(myMovies, isWatched) {
             // console.log("myMovies[key]: ",  myMovies[key]);
         }
     }
-}
+  }
+
 
 function searchMyMovies() {
 
@@ -95,9 +96,19 @@ $("#auth-btn").click(function() {
         });
 });
 
-// $(".logOutUser").click(function(event) {
 
-// }); 
+//User Logout
+$("#sign-out-btn").click(function() {
+  console.log("clicked sign-out");
+  fb.auth().signOut().then(function() {
+    currentUser = null;
+  console.log("sign out successful");
+  window.location.reload();
+  }, function(error) {
+  // An error happened.
+ });
+});
+
 
 // To-Do : Add keypress event, validate user input, clear text input, clear current search results
 $(".searchInput").keypress(function(event) {

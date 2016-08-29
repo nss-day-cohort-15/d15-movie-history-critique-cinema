@@ -43,7 +43,7 @@ label {
   /*background: lightgrey;*/
 }
 
-#auth-btn {
+.buttons {
   float: right;
 }
 

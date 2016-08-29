@@ -12,10 +12,13 @@
     <div class="header">
       <label for="search-label">Search:</label>
       <input type="text" name="movieSearch" class="searchInput" placeholder="Search OMDb and your tracked movies...">
-      <button id="auth-btn" type="button">Sign in with Google</button>
+      <div class="buttons">
+        <button id="auth-btn" type="button">Sign in with Google</button>
+        <button id="sign-out-btn" type="button">Sign Out</button>
+      </div>
     </div>
-    
-    <h1>Movie History</h1> 
+
+    <h1>Movie History</h1>
     <!-- To-Do: add breadcrumbs -->
 
       <table>
@@ -33,7 +36,7 @@
     <p class="hidden add-to-watch"><a href="#">Add to Watchlist</a></p>
 
   </div>
-    
+
 
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
