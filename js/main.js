@@ -1,6 +1,6 @@
 "use strict";
 
-
+// Variables and requirements.
 let db = require("./db-interactions"),
     login = require("./user"),
     fb = require("./api-config"),
@@ -15,17 +15,18 @@ let db = require("./db-interactions"),
 // movieData = require('../templates/movies/movie-data.js');
 
 
-
+// Displays search results in DOM. Each result after that overrites previous result.
 function newMovieSearch(title) {
-    db.getNewMovie(title)
-        .then(function(movieData) {
-            $("#movieOutput").html("");
-            $("#movieOutput").append(searchTemplate(movieData));
-            currentMovie = movieData;
-            $(".searchInput").val("");
-        });
+  db.getNewMovie(title)
+    .then(function(movieData) {
+      $("#movieOutput").html("");
+      $("#movieOutput").append(searchTemplate(movieData));
+      currentMovie = movieData;
+      $(".searchInput").val("");
+  });
 }
 
+// Show movies in users watched movies list
 function showMyMovies(myMovies, isWatched) {
     console.log("showMyMovies running");
     var movies = [];
@@ -38,19 +39,7 @@ function showMyMovies(myMovies, isWatched) {
     }
   }
 
-
-function searchMyMovies() {
-
-}
-
-function deleteMyMovie() {
-
-}
-
-function addToList() {
-
-}
-
+// Stage movies based on currently logged in user to display in DOM
 function prepFbMoviesForDomLoad() {
     console.log("prepFbMoviesForDomLoad running");
     db.getUserMovies()
@@ -65,13 +54,8 @@ function prepFbMoviesForDomLoad() {
         });
 }
 
-
-function buildNewMovieObject() {
-
-
-}
-
 // Q: How would the this. method look in this function? err saying possible strict violation.   this.movie = "test";
+// Build a movie object with relevant data to eventually display in DOM
 function buildFbMovieObject(newMovie) {
     var movie = {
         title: newMovie.Title,
@@ -133,21 +117,21 @@ $(".searchInput").keypress(function(event) {
     }
 });
 
-
+// This is supposed to display the unwatched movies list
 $(".show-unwatched-list").click(function(event) {
     console.log("Show Unwatched clicked");
     $(".show-unwatched-list").toggleClass("hidden");
     showMyMovies(myMovies, false);
 });
 
-
+// This is supposed to display the watched movies list
 $(".show-watched-list").click(function(event) {
     console.log("Show Watched clicked");
     $(".show-watched-list").toggleClass("hidden");
     showMyMovies(myMovies, true);
 });
 
-
+// This is supposed to show the favorite movies list
 $(".show-favorites-list").click(function(event) {
     console.log("showFavorite clicked");
     $(".show-favorites-list").toggleClass("hidden");
@@ -162,6 +146,7 @@ $(".show-favorites-list").click(function(event) {
 //     db.addMovieToFb(movieId);
 // });
 
+// Add movie to watch list
 $(".add-to-watch").click(function(event) {
     console.log("currentMovie: ", currentMovie);
     let movieId = buildFbMovieObject(currentMovie);
@@ -178,25 +163,3 @@ $("#add-movie").click(function() {
     $(".uiContainer--wrapper").html(populateNewMovie);
   });
 });
-
-
-
-$(".rateMovie").click(function(event) {
-
-});
-
-
-$(".searchFilter").click(function(event) {
-
-});
-
-
-$(".searchMyMovies").click(function(event) {
-
-});
-
-
-$(".moveNewMovies").click(function(event) {
-
-});
-
