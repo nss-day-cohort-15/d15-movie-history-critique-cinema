@@ -3,7 +3,7 @@
 let firebase = require("./api-config");
 var userMovie = getMovieTitle();
 
-// To-Do: add .fail reject error alerts
+// To-Do: add .fail reject error messages
 
 function getUserMovies(callback) {
   return new Promise(function(resolve, reject){
@@ -49,6 +49,7 @@ function deleteMovieFromFb(movieId) {
     });
   });
 }
+
 
 // Gets movie object from OMDb
 function getNewMovie(movieId) {
