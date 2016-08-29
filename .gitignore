@@ -4,3 +4,4 @@ js/api-getter.js
 .DS_Store
 css/.DS_Store
 js/.DS_Store
+dist/app.js

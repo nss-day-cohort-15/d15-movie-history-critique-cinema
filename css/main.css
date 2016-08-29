@@ -24,7 +24,6 @@ table, tr, td a {
 }
 
 .movie {
-  /*display: inline-block;*/
   border: 1px solid black;
   margin-top: .75em;
   padding: .75em;

@@ -124,7 +124,7 @@ $(".show-favorites-list").click(function(event) {
     $(".show-favorites-list").toggleClass("hidden");
 });
 
-$(".delete").click(function(event) {
+$(".de2lete").click(function(event) {
   console.log("deleteMovie clicked");
   // console.log("currentMovie: ", currentMovie);
   // let movieId = buildFbMovieObject(currentMovie);
