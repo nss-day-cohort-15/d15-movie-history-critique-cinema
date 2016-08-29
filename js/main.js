@@ -19,6 +19,7 @@ let db = require("./db-interactions"),
 function newMovieSearch(title) {
     db.getNewMovie(title)
         .then(function(movieData) {
+            $("#movieOutput").html("");
             $("#movieOutput").append(searchTemplate(movieData));
             currentMovie = movieData;
             $(".searchInput").val("");
