@@ -19,6 +19,7 @@ function newMovieSearch(title) {
     .then(function(movieData) {
       $("#movieOutput").append(searchTemplate(movieData));
       currentMovie = movieData;
+      $(".searchInput").val()="";
     });
 }
  
@@ -26,10 +27,10 @@ function showMyMovies(myMovies, isWatched) {
   console.log("showMyMovies running");
   var movies=[];
   for(var key in myMovies) {
-    // console.log("key: ", key);
+    console.log("key: ", key);
     if(myMovies[key].watched===isWatched){
       movies.push(myMovies[key]);
-      console.log("myMovies[key]: ",  myMovies[key]);
+      // console.log("myMovies[key]: ",  myMovies[key]);
     }
   } 
 }
@@ -77,7 +78,7 @@ function buildFbMovieObject(newMovie) {
     favorite: false,
     user: currentUser
   };
-  console.log(movie);
+  console.log("movie: ", movie);
   return movie;
 }
 
@@ -95,14 +96,18 @@ $("#auth-btn").click(function() {
 
 // $(".logOutUser").click(function(event) {
 
-// });
+// }); 
 
 // To-Do : Add keypress event, validate user input, clear text input, clear current search results
-$(".findNewMovie").click(function(event) {
-  console.log("search button clicked");
-  var movieTitle = $(".searchInput").val();
-  $(".add-to-watch").toggleClass("hidden");
-  newMovieSearch(movieTitle);
+$(".searchInput").keypress(function(event) {
+  
+  var key = event.keyCode;
+  if (key ===13) {
+    console.log("Enter");  
+    var movieTitle = $(".searchInput").val();
+    $(".add-to-watch").toggleClass("hidden");
+    newMovieSearch(movieTitle);
+  }
 });
 
 
