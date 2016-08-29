@@ -15,15 +15,15 @@ let db = require("./db-interactions"),
 // movieData = require('../templates/movies/movie-data.js');
 
 
-
+// Displays search results in DOM. Each result after that overrites previous result.
 function newMovieSearch(title) {
-    db.getNewMovie(title)
-        .then(function(movieData) {
-            $("#movieOutput").html("");
-            $("#movieOutput").append(searchTemplate(movieData));
-            currentMovie = movieData;
-            $(".searchInput").val("");
-        });
+  db.getNewMovie(title)
+    .then(function(movieData) {
+      $("#movieOutput").html("");
+      $("#movieOutput").append(searchTemplate(movieData));
+      currentMovie = movieData;
+      $(".searchInput").val("");
+  });
 }
 
 function showMyMovies(myMovies, isWatched) {
