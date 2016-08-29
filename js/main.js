@@ -21,7 +21,7 @@ function newMovieSearch(title) {
       currentMovie = movieData;
     });
 }
- 
+
 function showMyMovies(myMovies, isWatched) {
   console.log("showMyMovies running");
   var movies=[];
@@ -31,7 +31,7 @@ function showMyMovies(myMovies, isWatched) {
       movies.push(myMovies[key]);
       console.log("myMovies[key]: ",  myMovies[key]);
     }
-  } 
+  }
 }
 
 function searchMyMovies() {
@@ -72,7 +72,7 @@ function buildFbMovieObject(newMovie) {
     title: newMovie.Title,
     release: newMovie.Released,
     actors: newMovie.Actors,
-    rating: null, 
+    rating: null,
     watched: false,
     favorite: false,
     user: currentUser
@@ -93,9 +93,15 @@ $("#auth-btn").click(function() {
   });
 });
 
-// $(".logOutUser").click(function(event) {
-
-// });
+//User Logout
+$("#sign-out-btn").click(function() {
+  console.log("clicked sign-out");
+  fb.auth().signOut().then(function() {
+  console.log("sign out successful");
+  }, function(error) {
+  // An error happened.
+ });
+});
 
 // To-Do : Add keypress event, validate user input, clear text input, clear current search results
 $(".findNewMovie").click(function(event) {
@@ -110,7 +116,7 @@ $(".show-unwatched-list").click(function(event) {
     console.log("Show Unwatched clicked");
     $(".show-unwatched-list").toggleClass("hidden");
     showMyMovies(myMovies, false);
-}); 
+});
 
 
 $(".show-watched-list").click(function(event) {
@@ -130,7 +136,7 @@ $(".delete").click(function(event) {
   console.log("deleteMovie clicked");
   // console.log("currentMovie: ", currentMovie);
   // let movieId = buildFbMovieObject(currentMovie);
-  // console.log("movieid: ", movieId);
+  // console.log("movieId: ", movieId);
   // db.addMovieToFb(movieId);
 });
 
