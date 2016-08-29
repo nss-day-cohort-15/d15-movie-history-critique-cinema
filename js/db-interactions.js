@@ -1,10 +1,11 @@
 "use strict";
 
+//this imports needed variables from other areas of the project.
 let firebase = require("./api-config");
 var userMovie = getMovieTitle();
 
 // To-Do: add .fail reject error messages
-
+//gets user movies from the firebase database
 function getUserMovies(callback) {
   return new Promise(function(resolve, reject){
     $.ajax({
@@ -25,6 +26,7 @@ function getUserMovies(callback) {
 //   });
 // }
 
+//this function pushes new movie objects to the firebase database
 function addMovieToFb(movieFormObj) {
   return new Promise(function(resolve, reject) {
     $.ajax({
@@ -38,6 +40,7 @@ function addMovieToFb(movieFormObj) {
   });
 }
 
+//this function deletes the chosen movie from the user's database on firebase
 function deleteMovieFromFb(movieId) {
   console.log("movieId", movieId);
   return new Promise(function(resolve, reject) {
@@ -65,11 +68,13 @@ function getNewMovie(movieId) {
   });
 }
 
+//this function gets the movie's title from the input field
 function getMovieTitle() {
   var inputMovie = $("#movieTitle").val();
   return inputMovie;
 }
 
+//this function edits the movie, adding the rating, then sends that edit to the firebase database
 function rateMovie(movieFormObj, movieId) {
   return new Promise(function(resolve, reject) {
     $.ajax({
@@ -82,6 +87,7 @@ function rateMovie(movieFormObj, movieId) {
   });
 }
 
+//this exports our functions so they can be used in other functions in this project
 module.exports = {
   getUserMovies,
   // getWatchedMovies,
