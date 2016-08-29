@@ -97,7 +97,9 @@ $("#auth-btn").click(function() {
 $("#sign-out-btn").click(function() {
   console.log("clicked sign-out");
   fb.auth().signOut().then(function() {
+    currentUser = null;
   console.log("sign out successful");
+  window.location.reload();
   }, function(error) {
   // An error happened.
  });
