@@ -12,7 +12,7 @@ var config = {
   authDomain: fbData.authUrl
 };
 
-console.log("config", config);
+// console.log("config", config);
 
 firebase.initializeApp(config);
 

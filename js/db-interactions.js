@@ -3,6 +3,8 @@
 let firebase = require("./api-config");
 var userMovie = getMovieTitle();
 
+// To-Do: add .fail reject error messages
+
 function getUserMovies(callback) {
   return new Promise(function(resolve, reject){
     $.ajax({
@@ -48,10 +50,12 @@ function deleteMovieFromFb(movieId) {
   });
 }
 
-function getNewMovie(newMovieInput) {
+
+// Gets movie object from OMDb
+function getNewMovie(movieId) {
   return new Promise(function(resolve, reject){
  $.ajax({
-      url: `http://www.omdbapi.com/?t=${newMovieInput}&y=&plot=short&r=json`
+      url: "http://www.omdbapi.com/?t="+movieId+"&y=&plot=short&r=json"
     }).done(function(movieData){
       console.log("movieData", movieData);
       resolve(movieData);

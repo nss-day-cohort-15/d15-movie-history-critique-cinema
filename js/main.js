@@ -2,19 +2,36 @@
 
 let db = require("./db-interactions"),
   login = require("./user"),
+  fb = require("./api-config"),
   dom = require("./dom-builder"),
-  userId,
-  newMovieObj = {};
+  currentUser = null,
+  Handlebars = require("hbsfy/runtime"),
+  searchTemplate = require('../templates/movies/movie.hbs'),
+  // userTemplate = require('../templates/movies/userMovies.hbs'),
+  currentMovie = null,
+  myMovies = [];
+  // movieData = require('../templates/movies/movie-data.js');
 
-function newMovieSearch(newMovieInput) {
-  console.log("new movie search");
-  db.getNewMovie(newMovieInput)
+
+
+function newMovieSearch(title) {
+  db.getNewMovie(title)
     .then(function(movieData) {
-      console.log("new movie search", movieData);
-      let newMovieObj = buildNewMovieObject(movieData);
-      console.log("after newMovieObj ", newMovieObj);
-      dom.populateNewMovie(newMovieObj);
+      $("#movieOutput").append(searchTemplate(movieData));
+      currentMovie = movieData;
     });
+}
+ 
+function showMyMovies(myMovies, isWatched) {
+  console.log("showMyMovies running");
+  var movies=[];
+  for(var key in myMovies) {
+    // console.log("key: ", key);
+    if(myMovies[key].watched===isWatched){
+      movies.push(myMovies[key]);
+      console.log("myMovies[key]: ",  myMovies[key]);
+    }
+  } 
 }
 
 function searchMyMovies() {
@@ -29,33 +46,40 @@ function addToList() {
 
 }
 
-
-function prepFbMoviesForDomLoad(userId) {
-  console.log("my Id is: ", userId);
+function prepFbMoviesForDomLoad() {
   console.log("load some movies");
-  db.getUserMovies(userId)
-    .then (function (fbmovieData){
-      dom.populateUserMovies(fbmovieData);
+  db.getUserMovies()
+    .then(function(movieData){
+        for(var movie in movieData) {
+          console.log("user: ", movieData[movie].user);
+          if(movieData[movie].user===currentUser){
+            myMovies.push(movieData[movie]);
+            console.log("movieData[movie]: ", movieData[movie]);
+          }
+        }
     });
 }
 
-function buildNewMovieObject(movieData) {
-  console.log("the movie is in buildNewMovieObject ", movieData);
-  let newData = movieData;
-  console.log("as a variable: ", newData);
-  let newMovieObj = {
-    movieTitle : newData.Title,
-    movieYear: newData.Year,
-    movieActors: newData.Actors
+
+function buildNewMovieObject() {
+
+
+}
+
+// Q: How would the this. method look in this function? err saying possible strict violation.   this.movie = "test";
+function buildFbMovieObject(newMovie) {
+  var movie = {
+    title: newMovie.Title,
+    release: newMovie.Released,
+    actors: newMovie.Actors,
+    rating: null, 
+    watched: false,
+    favorite: false,
+    user: currentUser
   };
-  console.log(newMovieObj);
-  return newMovieObj;
+  console.log(movie);
+  return movie;
 }
-
-function buildFbMovieObject() {
-
-}
-
 
 //User Login
 $("#auth-btn").click(function() {
@@ -64,8 +88,8 @@ $("#auth-btn").click(function() {
   .then(function(result){
     let user = result.user;
     console.log("logged in user", user.uid);
-    let userId = user.uid;
-    prepFbMoviesForDomLoad(userId);
+    currentUser = fb.auth().currentUser.uid;
+    prepFbMoviesForDomLoad();
   });
 });
 
@@ -73,47 +97,72 @@ $("#auth-btn").click(function() {
 
 // });
 
+// To-Do : Add keypress event, validate user input, clear text input, clear current search results
 $(".findNewMovie").click(function(event) {
-  let newMovieInput = $(".findMovieInput").val();
-  console.log("findNewMovieEL", newMovieInput);
-  newMovieSearch(newMovieInput);
+  console.log("search button clicked");
+  var movieTitle = $(".searchInput").val();
+  $(".add-to-watch").toggleClass("hidden");
+  newMovieSearch(movieTitle);
 });
 
-$(".searchMyMovies").click(function(event) {
 
+$(".show-unwatched-list").click(function(event) {
+    console.log("Show Unwatched clicked");
+    $(".show-unwatched-list").toggleClass("hidden");
+    showMyMovies(myMovies, false);
+}); 
+
+
+$(".show-watched-list").click(function(event) {
+    console.log("Show Watched clicked");
+    $(".show-watched-list").toggleClass("hidden");
+    showMyMovies(myMovies, true);
 });
 
-$(".showUnwatchedMovies").click(function(event) {
 
+$(".show-favorites-list").click(function(event) {
+    console.log("showFavorite clicked");
+    $(".show-favorites-list").toggleClass("hidden");
 });
 
-$(".showWatchedMovies").click(function(event) {
 
+$(".delete").click(function(event) {
+  console.log("deleteMovie clicked");
+  // console.log("currentMovie: ", currentMovie);
+  // let movieId = buildFbMovieObject(currentMovie);
+  // console.log("movieid: ", movieId);
+  // db.addMovieToFb(movieId);
 });
 
-$(".deleteMovie").click(function(event) {
-
+$(".add-to-watch").click(function(event) {
+  console.log("currentMovie: ", currentMovie);
+  let movieId = buildFbMovieObject(currentMovie);
+  console.log("movieid: ", movieId);
+  db.addMovieToFb(movieId);
+  // myMovies.push(movieId);
 });
 
-$(document).on("click", ".addToWatched", function() {
-  console.log("you want to add this to your watched list");
-  let watchedValue = true;
-  console.log(newMovieObj);
-  //how do I get the movie object in here?
-
-});
-
-$(document).on("click", ".addToUnwatched", function() {
-  console.log("you want to add this to your UNwatched list");
-});
 
 $(".rateMovie").click(function(event) {
 
 });
 
-// $(".searchFilter").click(function(event) {
-// I don't think we need to do this since we're only asking for a title at this point. a text box will do
-// });
+
+$(".searchFilter").click(function(event) {
+
+});
+
+
+$(".searchMyMovies").click(function(event) {
+
+});
+
+
+$(".moveNewMovies").click(function(event) {
+
+});
+
+
 
 
 
