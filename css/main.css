@@ -5,6 +5,7 @@ table, tr, td {
   text-align: center;
 }
 
+
 input {
   width: 50%;
 }
@@ -14,8 +15,13 @@ table, tr, td a {
   text-decoration: none;
 }
 
+label {
+  display: inline-block;
+  padding-right: .5em;
+}
+
 .searchInput {
-  width: .5 em;
+  width: .35 em;
 }
 
 .header {
@@ -37,7 +43,7 @@ table, tr, td a {
   /*background: lightgrey;*/
 }
 
-#auth-btn {
+.buttons {
   float: right;
 }
 
