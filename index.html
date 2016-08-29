@@ -3,40 +3,41 @@
 <head>
   <title>Movie History</title>
 
-  <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
-
   <link rel="stylesheet" type="text/css" href="css/main.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
 </head>
 <body>
 
-<h1>Movie History</h1>
-
-
   <div class="container">
-    <div class="row box">
-      <div class="nav-wrapper">
-        <ul id="nav-mobile" class="left nav__links">
-          <li class="findNewMovie"><a href="#" title="">Find New Movies</a></li>
-          <input type="text" class="findMovieInput" placeholder="type movie title here">
-          <li class="searchMyMovies"><a href="#" title="">Search My Movies</a></li>
-          <li class="showUnwatchedMovies"><a class="last" href="#" title="">Show Unwatched</a></li>
-          <li class="addToWatched"><a class="last" href="#" title="">add to your watched list</a></li>
-          <li class="addToUnwatched"><a class="last" href="#" title="">add to your unwatched list</a></li>
-        </ul>
-      </div>
-    </div>
-    <div>
+
+    <div class="header">
+      <button class="findNewMovie">Search</button>
+      <input type="text" name="movieSearch" class="searchInput" placeholder="Search OMDb and your tracked movies...">
       <button id="auth-btn" type="button">Sign in with Google</button>
     </div>
-    <div class="movieOutput">
+    
+    <h1>Movie History</h1> 
+    <!-- To-Do: add breadcrumbs -->
+
+      <table>
+        <tr>
+          <td class="hidden show-untracked-list"><a href="#">Show Untracked</a></td>
+          <td class="hidden show-unwatched-list"><a href="#">Show Unwatched</a></td>
+          <td class="hidden show-watched-list"><a href="#">Show Watched</a></td>
+          <td class="hidden show-favorites-list"><a href="#">Show Favorites</a></td>
+        </tr>
+      </table>
+    <div id="movieOutput">
       <!-- Movie Info Here -->
     </div>
+
+    <p class="hidden add-to-watch"><a href="#">Add to Watchlist</a></p>
+
   </div>
-  <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
-  <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="dist/app.js"></script>
+    
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+<script src="dist/app.js"></script>
 
 
 </body>
