@@ -2,26 +2,42 @@
 <html>
 <head>
   <title>Movie History</title>
-  <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+
+  <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 </head>
 <body>
-<h1>Movie History</h1>
-  <div>
-    <button id="auth-btn" type="button">Sign in with Google</button>
-  </div>
-  <div>
-    <input type="text" name="movieSearch" class="movieSearch">
-  </div>
-  <div class="movieOutput">
-    <!-- Movie Info Here -->
-  </div>
 
-<!-- <script src="materialize/js/materialize.min.js"></script> -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="dist/app.js"></script>
+<h1>Movie History</h1>
+
+
+  <div class="container">
+    <div class="row box">
+      <div class="nav-wrapper">
+        <ul id="nav-mobile" class="left nav__links">
+          <li class="findNewMovie"><a href="#" title="">Find New Movies</a></li>
+          <input type="text" class="findMovieInput" placeholder="type movie title here">
+          <li class="searchMyMovies"><a href="#" title="">Search My Movies</a></li>
+          <li class="showUnwatchedMovies"><a class="last" href="#" title="">Show Unwatched</a></li>
+          <li class="addToWatched"><a class="last" href="#" title="">add to your watched list</a></li>
+          <li class="addToUnwatched"><a class="last" href="#" title="">add to your unwatched list</a></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <button id="auth-btn" type="button">Sign in with Google</button>
+    </div>
+    <div class="movieOutput">
+      <!-- Movie Info Here -->
+    </div>
+  </div>
+  <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="dist/app.js"></script>
+
 
 </body>
 </html>
