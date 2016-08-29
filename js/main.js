@@ -5,6 +5,7 @@ let db = require("./db-interactions"),
     login = require("./user"),
     fb = require("./api-config"),
     dom = require("./dom-builder"),
+    templates = require("./dom-builder"),
     currentUser = null,
     Handlebars = require("hbsfy/runtime"),
     searchTemplate = require('../templates/movies/movie.hbs'),
@@ -84,6 +85,15 @@ function buildFbMovieObject(newMovie) {
     return movie;
 }
 
+// Remove movie then reload the DOM w/out new movie
+$(document).on("click", ".delete-btn", function () {
+  let movieId = $(this).data("delete-id");
+  db.deleteMovie(movieId)
+  .then(function(data) {
+    prepFbMoviesForDomLoad();
+  });
+});
+
 //User Login
 $("#auth-btn").click(function() {
     console.log("clicked auth");
@@ -143,13 +153,13 @@ $(".show-favorites-list").click(function(event) {
 });
 
 
-$(".delete").click(function(event) {
-    console.log("deleteMovie clicked");
-    // console.log("currentMovie: ", currentMovie);
-    // let movieId = buildFbMovieObject(currentMovie);
-    // console.log("movieid: ", movieId);
-    // db.addMovieToFb(movieId);
-});
+// $(".delete").click(function(event) {
+//     console.log("deleteMovie clicked");
+//     console.log("currentMovie: ", currentMovie);
+//     let movieId = buildFbMovieObject(currentMovie);
+//     console.log("movieid: ", movieId);
+//     db.addMovieToFb(movieId);
+// });
 
 $(".add-to-watch").click(function(event) {
     console.log("currentMovie: ", currentMovie);
@@ -158,6 +168,16 @@ $(".add-to-watch").click(function(event) {
     db.addMovieToFb(movieId);
     // myMovies.push(movieId);
 });
+
+// Load the new movie form
+$("#add-movie").click(function() {
+  console.log("clicked add movie");
+  var populateNewMovie = templates.populateNewMovie()
+  .then(function(populateNewMovie) {
+    $(".uiContainer--wrapper").html(populateNewMovie);
+  });
+});
+
 
 
 $(".rateMovie").click(function(event) {
@@ -178,3 +198,4 @@ $(".searchMyMovies").click(function(event) {
 $(".moveNewMovies").click(function(event) {
 
 });
+
