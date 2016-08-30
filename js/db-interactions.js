@@ -3,15 +3,16 @@
 //this imports needed variables from other areas of the project.
 let firebase = require("./api-config");
 var userMovie = getMovieTitle();
+let Handlebars = require("hbsfy/runtime");
 
 // To-Do: add .fail reject error messages
 //gets user movies from the firebase database
-function getUserMovies(callback) {
+function getUserMovies(userId) {
   return new Promise(function(resolve, reject){
     $.ajax({
-      url: 'https://movie-history-e8f3d.firebaseio.com/movies.json'
-    }).done(function(movieData){
-      resolve(movieData);
+      url: `https://movie-history-e8f3d.firebaseio.com/movies.json?orderBy="user"&equalTo="${userId}"`
+    }).done(function(myMovieData){
+      resolve(myMovieData);
     });
   });
 }
