@@ -13,9 +13,14 @@ function getUserMovies(userId) {
       url: `https://movie-history-e8f3d.firebaseio.com/movies.json?orderBy="user"&equalTo="${userId}"`
     }).done(function(myMovieData){
       resolve(myMovieData);
-    });
+      // thom- added fail reject user messages/////////////////
+      }).fail(function(error){
+    reject(error);
   });
+});
+// end of promise
 }
+
 
 // function getWatchedMovies(callback) {
 //   return new Promise(function(resolve, reject){
