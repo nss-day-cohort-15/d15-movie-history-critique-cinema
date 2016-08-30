@@ -65,13 +65,13 @@ function prepFbMoviesForDomLoad() {
 
 // Q: How would the this. method look in this function? err saying possible strict violation.   this.movie = "test";
 // Build a movie object with relevant data to eventually display in DOM
-function buildFbMovieObject(newMovie) {
+function buildFbMovieObject(newMovie, watchedValue) {
     var movie = {
         Title: newMovie.Title,
         Release: newMovie.Released,
         Actors: newMovie.Actors,
         rating: null,
-        watched: false,
+        watched: watchedValue,
         favorite: false,
         user: currentUser
     };
@@ -87,6 +87,14 @@ $(document).on("click", ".delete-btn", function () {
     prepFbMoviesForDomLoad();
   });
 });
+
+$(document).on("click", ".add-to-seen-list", function () {
+  console.log("currentMovie: ", currentMovie);
+    let watchedValue = true;
+    let movieId = buildFbMovieObject(currentMovie, watchedValue);
+    console.log("movieid: ", movieId);
+    db.addMovieToFb(movieId);
+  });
 
 //User Login
 $("#auth-btn").click(function() {
@@ -161,7 +169,8 @@ $(".show-favorites-list").click(function(event) {
 // Add movie to watch list
 $(".add-to-watch").click(function(event) {
     console.log("currentMovie: ", currentMovie);
-    let movieId = buildFbMovieObject(currentMovie);
+    let watchedValue = false;
+    let movieId = buildFbMovieObject(currentMovie, watchedValue);
     console.log("movieid: ", movieId);
     db.addMovieToFb(movieId);
     // myMovies.push(movieId);
