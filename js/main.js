@@ -27,17 +27,26 @@ function newMovieSearch(title) {
 }
 
 // Show movies in users watched movies list
-function showMyMovies(myMovies, isWatched) {
+function showMyMovies(userId, watchedValue) {
     console.log("showMyMovies running");
+    console.log("the user is:", userId);
+    console.log("the watchedValue: ", watchedValue);
     var movies = [];
-    for (var key in myMovies) {
-        console.log("key: ", key);
-        if (myMovies[key].watched === isWatched) {
-            movies.push(myMovies[key]);
-            // console.log("myMovies[key]: ",  myMovies[key]);
+    db.getUserMovies(userId)
+      .then (function(myMovieData) {
+        console.log("showMyMovies after promise:", myMovieData);
+        for (var movie in myMovieData) {
+            console.log("movie: ", movie);
+            console.log(myMovieData[movie].watched);
+            if (myMovieData[movie].watched === watchedValue) {
+                movies.push(myMovieData[movie]);
+                console.log(movies);
+            }
         }
-    }
-  }
+        console.log("outside for loop ", movies);
+        dom.populateUserMovies(movies);
+      });
+}
 
 // Stage movies based on currently logged in user to display in DOM
 function prepFbMoviesForDomLoad() {
@@ -58,9 +67,9 @@ function prepFbMoviesForDomLoad() {
 // Build a movie object with relevant data to eventually display in DOM
 function buildFbMovieObject(newMovie) {
     var movie = {
-        title: newMovie.Title,
-        release: newMovie.Released,
-        actors: newMovie.Actors,
+        Title: newMovie.Title,
+        Release: newMovie.Released,
+        Actors: newMovie.Actors,
         rating: null,
         watched: false,
         favorite: false,
@@ -121,7 +130,9 @@ $(".searchInput").keypress(function(event) {
 $(".show-unwatched-list").click(function(event) {
     console.log("Show Unwatched clicked");
     $(".show-unwatched-list").toggleClass("hidden");
-    showMyMovies(myMovies, false);
+    console.log("in showunwatchedlist the user is: ",currentUser);
+    let watchedValue = false;
+    showMyMovies(currentUser, watchedValue);
 });
 
 // This is supposed to display the watched movies list

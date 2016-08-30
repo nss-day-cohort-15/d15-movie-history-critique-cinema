@@ -1,9 +1,15 @@
 "use strict";
 
+let userMovieTemplate = require('../templates/movies/userMovies.hbs');
+let Handlebars = require("hbsfy/runtime");
+
 function populateUserMovies(fbmovieData) {
-    console.log("I'll populate the user's movies from FB");
-
-
+    console.log("I'll populate the user's movies from FB", fbmovieData);
+    $("#movieOutput").html("");
+      // $("#movieOutput").html("Your movies are:",userMovieTemplate(fbmovieData));
+      fbmovieData.forEach(function(movie) {
+    $("#movieOutput").append(`<h2>${movie.Title}</h2><h4>${movie.Year}</h4><h4>${movie.Actors}</h4><button class="addToUnwatched">Add this to your unwatched list</button><button class="addToWatched">add this to your already watched list</button>`);
+  });
 }
 
 // Create a movie card to display in the DOM

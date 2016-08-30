@@ -1,6 +1,8 @@
-<div class="movie">
-  <ul>
-    {{#each Object}}
-      <li>{{Title}}</li>
-    {{/each}}
-  </ul>
+{{#each this}}
+  <div class="movies">
+    <h3>Title:{{Title}}</h3>
+    <h4>Release Date:{{Released}}</h4>
+    <h4>Starring: {{Actors}}</h4>
+    <button type="submit" value="Delete">Delete</button>
+    <p class="add-to-watch"><a href="#">Watched</a></p>
+{{/each}}

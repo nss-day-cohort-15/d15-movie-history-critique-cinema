@@ -1,16 +1,13 @@
+let fbmovieData = require()
 var movieData = {
-  title: "Search Results",
-  body: "Text here",
-  tags: [
+  movies: [
     {
-      category: "title",
-      name: "handlebars"
-    },
-    {
-      category: "butter churning",
-      name: "handlebars stuff"
+      title: "${fbmovieData.title}",
+      year: "${fbmovieData.release}",
+      actors: "${fbmovieData.actors}"
     }
-  ],
-};
+  ]
+}
+
 
 module.exports = movieData;
