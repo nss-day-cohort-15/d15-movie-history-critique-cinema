@@ -8,7 +8,7 @@ function populateUserMovies(fbmovieData) {
     $("#movieOutput").html("");
       // $("#movieOutput").html("Your movies are:",userMovieTemplate(fbmovieData));
       fbmovieData.forEach(function(movie) {
-    $("#movieOutput").append(`<h2>${movie.Title}</h2><h4>${movie.Year}</h4><h4>${movie.Actors}</h4><button class="addToUnwatched">Add this to your unwatched list</button><button class="addToWatched">add this to your already watched list</button>`);
+    $("#movieOutput").append(`<h2>${movie.Title}</h2><h4>${movie.Release}</h4><h4>${movie.Actors}</h4><button class="addToUnwatched">Add this to your unwatched list</button><button class="addToWatched">add this to your already watched list</button>`);
   });
 }
 

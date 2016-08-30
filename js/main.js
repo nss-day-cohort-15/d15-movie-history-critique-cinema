@@ -139,7 +139,8 @@ $(".show-unwatched-list").click(function(event) {
 $(".show-watched-list").click(function(event) {
     console.log("Show Watched clicked");
     $(".show-watched-list").toggleClass("hidden");
-    showMyMovies(myMovies, true);
+    let watchedValue = true;
+    showMyMovies(currentUser, watchedValue);
 });
 
 // This is supposed to show the favorite movies list
